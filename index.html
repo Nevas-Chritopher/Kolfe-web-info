@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>የኩባንያ መረጃ ማዕከል</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            position: relative;
+        }
+        
+        /* Background Logo */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"><circle cx="150" cy="150" r="130" fill="none" stroke="%23e6eaf5" stroke-width="2"/><text x="150" y="120" text-anchor="middle" font-family="Arial" font-size="35" fill="%23e6eaf5" font-weight="bold">ቴክኮርፕ</text><text x="150" y="170" text-anchor="middle" font-family="Arial" font-size="28" fill="%23e6eaf5" font-weight="bold">ኢትዮጵያ</text><path d="M80,200 Q150,250 220,200" fill="none" stroke="%23e6eaf5" stroke-width="2"/></svg>');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 300px;
+            opacity: 0.15;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #1a2a6c, #2a3a8c);
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="white" fill-opacity="0.05" width="50" height="50"/><rect fill="white" fill-opacity="0.05" x="50" y="50" width="50" height="50"/></svg>');
+            background-size: 100px;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+        
+        /* CEO Section */
+        .ceo-section {
+            padding: 100px 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(2px);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 70px;
+            color: #1a2a6c;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background-color: #4a6bff;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .ceo-card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 60px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .ceo-image {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 8px solid #f0f4ff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .ceo-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .ceo-name {
+            font-size: 2.2rem;
+            color: #1a2a6c;
+            margin-bottom: 10px;
+        }
+        
+        .ceo-title {
+            font-size: 1.3rem;
+            color: #4a6bff;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+        
+        .ceo-quote {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #666;
+            border-left: 4px solid #4a6bff;
+            padding-left: 20px;
+            margin-top: 25px;
+            background-color: rgba(240, 244, 255, 0.5);
+            padding: 15px 20px;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        /* Company Classification */
+        .classification-section {
+            padding: 100px 0;
+            background-color: rgba(240, 244, 255, 0.9);
+            backdrop-filter: blur(2px);
+        }
+        
+        .classification-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        .classification-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 40px 30px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .classification-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .classification-icon {
+            font-size: 3.5rem;
+            color: #4a6bff;
+            margin-bottom: 25px;
+        }
+        
+        .classification-title {
+            font-size: 1.5rem;
+            color: #1a2a6c;
+            margin-bottom: 15px;
+        }
+        
+        .classification-desc {
+            color: #666;
+        }
+        
+        /* PDF Button Section */
+        .pdf-section {
+            padding: 100px 0;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(2px);
+        }
+        
+        .pdf-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: linear-gradient(to right, #1a2a6c, #4a6bff);
+            color: white;
+            font-size: 1.4rem;
+            font-weight: 600;
+            padding: 20px 45px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(74, 107, 255, 0.3);
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .pdf-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(74, 107, 255, 0.4);
+            background: linear-gradient(to right, #4a6bff, #1a2a6c);
+        }
+        
+        .pdf-button i {
+            font-size: 1.8rem;
+        }
+        
+        .pdf-description {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a2a6c;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            font-size: 0.9rem;
+        }
+        
+        /* Amharic Text Styling */
+        .amharic-text {
+            font-family: 'Segoe UI', 'Nyala', 'Abyssinica SIL', sans-serif;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .ceo-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .ceo-image {
+                width: 220px;
+                height: 220px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .pdf-button {
+                font-size: 1.2rem;
+                padding: 18px 35px;
+            }
+            
+            body::before {
+                background-size: 200px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .ceo-name {
+                font-size: 1.8rem;
+            }
+            
+            .pdf-button {
+                font-size: 1.1rem;
+                padding: 15px 30px;
+            }
+            
+            body::before {
+                background-size: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Welcome Message -->
+    <header>
+        <div class="container">
+            <h1 class="amharic-text">ወደ ኮልፌ ቀራንዮ ክ/ከተማ ዋና ስራ አስፈጻሚ ፑል አስተዳደርና ፋይናንስ ጽ/ቤት መረጃ ማዕከል እንኳን በደህና መጡ</h1>
+            <p class="subtitle amharic-text">የጽ/ቤቱን መዋቅር ያሰሱና ስለ ጽ/ቤቱ  ራዕይ ፣ ተልእኮና እሴቶች ዝርዝር መረጃ ይዳሱ።</p
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down" style="color: white; font-size: 2rem;"></i>
+        </div>
+    </header>
+    
+    <!-- CEO Section -->
+    <section class="ceo-section">
+        <div class="container">
+            <h2 class="section-title amharic-text">ኮልፌ ቀራንዮ ክ/ከተማ ዋና ስራ አስፈጻሚ ፑል አስተዳደርና ፋይናንስ ጽ/ቤት  ኃላፊ</h2>
+            <div class="ceo-card">
+                <img src="images/ceo-photo.jpg" alt="CEO Photo" class="ceo-image">
+                <div class="ceo-info">
+                    <h3 class="ceo-name amharic-text">ወ/ሮ ሳምራዊት ወርቁ</h3>
+                    <p class="ceo-quote amharic-text">"ስኬታችን በፍትህ፣ በልማት እና በደንበኞቻችን እና ባለድርሻ ወገኖቻችን ላይ እሴት በመስጠት ላይ ያተኮረ ጠንካራ መሠረት ላይ የተገነባ ነው።"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Company Classification Section -->
+    <section class="classification-section">
+        <div class="container">
+            <h2 class="section-title amharic-text">የጽ/ቤቱን መዋቅር እና በውስጡ የተካተቱ ቡድኖች</h2>
+            <div class="classification-container">
+                <div class="classification-card">
+                    <div class="classification-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3 class="classification-title amharic-text">የሰው ኃብት ልማት ቡድን</h3>
+                    <p class="classification-desc amharic-text">አቶ እንድሪስ መሐመድ</p>
+                </div>
+                
+                <div class="classification-card">
+                    <div class="classification-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3 class="classification-title amharic-text">የመንግስት ግዢ ቡድን</h3>
+                    <p class="classification-desc amharic-text">ወ/ሮ ሙሉ ሀይሌ</p>
+                </div>
+                
+                <div class="classification-card">
+                    <div class="classification-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="classification-title amharic-text">ፋይናንስ ቡድን</h3>
+                    <p class="classification-desc amharic-text">ወ/ሮ አለምፀሀይ አዲስ</p>
+                </div>
+                
+                <div class="classification-card">
+                    <div class="classification-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="classification-title amharic-text">የንብረትና ጠቅላላ አገልግሎት ቡድን</h3>
+                    <p class="classification-desc amharic-text">አቶ የኔአለም ጣሰው</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- PDF Section -->
+    <section class="pdf-section">
+        <div class="container">
+            <h2 class="section-title amharic-text">የጽ/ቤቱ ሰነዶች</h2>
+            <p class="pdf-description amharic-text">ስለጽ/ቤቱ ራዕይ ፣ ተልእኮና እሴቶች እንዲሁም የዜጎች ቻርተር ዝርዝር መረጃ ያግኙ  </p>
+            <a href="pdfs/company-info.pdf" target="_blank" class="pdf-button amharic-text">
+                <i class="fas fa-file-pdf"></i>
+                ስለጽ/ቤቱ ተጨማሪ መረጃ ይመልከቱ
+            </a>
+            <p style="margin-top: 20px; color: #888; font-size: 0.9rem;" class="amharic-text">ፒዲኤፍ ሰነዱ በአዲስ መስኮት ይከፈታል</p>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p class="amharic-text">© 2026 Nevas Chr. Solutions  Ethiopia። All Rights Reserved።</p>
+            <p class="amharic-text">የጽ/ቤቱ መረጃ ማዕከል | ስሪት 1.0</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add scroll animation for sections
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe sections for animation
+        document.querySelectorAll('.ceo-card, .classification-card, .pdf-button').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(el);
+        });
+        
+        // Add parallax effect to background logo
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const background = document.querySelector('body::before');
+            const rate = scrolled * -0.5;
+            
+            // Update the logo position for parallax effect
+            document.body.style.backgroundPosition = `center ${rate}px`;
+        });
+    </script>
+</body>
+</html>
